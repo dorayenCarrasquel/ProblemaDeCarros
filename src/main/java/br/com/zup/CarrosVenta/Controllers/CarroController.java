@@ -48,4 +48,17 @@ public class CarroController {
         }
         throw  new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
+
+    @DeleteMapping("/{nomeCarro}")//deletar e exibir carro
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void apagarCarro (@PathVariable String nomeCarro){
+
+        for (CarroDto carroDto : consecionario) {
+            if (carroDto.getModelo().equalsIgnoreCase(nomeCarro)) {
+                consecionario.remove(carroDto);
+            }
+        }
+
+        throw  new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
 }
