@@ -39,13 +39,13 @@ public class CarroController {
     public CarroDto atualizarCarro (@PathVariable String modeloCarro, @RequestBody CarroDto carroDto){
         for (CarroDto carroRef : consecionario) {
             if (carroRef.getModelo().equalsIgnoreCase(modeloCarro)) {
-                carroRef.setAno(carroRef.getAno());
-                carroRef.setCor(carroRef.getCor());
-                carroRef.setMotor(carroRef.getMotor());
+                carroRef.setAno(carroDto.getAno());
+                carroRef.setCor(carroDto.getCor());
+                carroRef.setMotor(carroDto.getMotor());
                 return carroRef;
             }
 
         }
-thro
+        throw  new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 }
