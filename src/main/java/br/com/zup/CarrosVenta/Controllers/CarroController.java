@@ -24,19 +24,19 @@ public class CarroController {
     }
 
     @GetMapping("/{nomeCarro}")//Pegar e exibir carro
-    public CarroDto exibirCarro(@PathVariable String nomeCarro){
+    public CarroDto exibirCarro(@PathVariable String nomeCarro) {
 
         for (CarroDto carroDto : consecionario) {
             if (carroDto.getModelo().equalsIgnoreCase(nomeCarro)) {
                 return carroDto;
             }
-
         }
 
-        throw  new ResponseStatusException(HttpStatus.NOT_FOUND);
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
+
     @PutMapping("/{modeloCarro}")
-    public CarroDto atualizarCarro (@PathVariable String modeloCarro, @RequestBody CarroDto carroDto){
+    public CarroDto atualizarCarro(@PathVariable String modeloCarro, @RequestBody CarroDto carroDto) {
         for (CarroDto carroRef : consecionario) {
             if (carroRef.getModelo().equalsIgnoreCase(modeloCarro)) {
                 carroRef.setAno(carroDto.getAno());
@@ -46,19 +46,23 @@ public class CarroController {
             }
 
         }
-        throw  new ResponseStatusException(HttpStatus.NOT_FOUND);
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{nomeCarro}")//deletar e exibir carro
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void apagarCarro (@PathVariable String nomeCarro){
-
+    public void apagarCarro(@PathVariable String nomeCarro) {
+        CarroDto carroRemover = null;
         for (CarroDto carroDto : consecionario) {
             if (carroDto.getModelo().equalsIgnoreCase(nomeCarro)) {
-                consecionario.remove(carroDto);
+                carroRemover = carroDto;
             }
         }
-
-        throw  new ResponseStatusException(HttpStatus.NOT_FOUND);
+        consecionario.remove(carroRemover);
+        if (carroRemover == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
+
+
 }
